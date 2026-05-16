@@ -1,4 +1,4 @@
-package cl.duoc.sistemaMarket.controller;
+package cl.duoc.msVenta.controller;
 
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -11,56 +11,57 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import cl.duoc.sistemaMarket.dto.UsuarioDTO;
-import cl.duoc.sistemaMarket.service.UsuarioService;
+import cl.duoc.msVenta.service.VentaService;
+import cl.duoc.msVenta.dto.VentaDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1/usuarios")
+@RequestMapping("/api/v1/ventas")
 @RequiredArgsConstructor
-public class UsuarioController {
+public class VentaController {
+    
+    private final VentaService ventaService;
 
-    private final UsuarioService usuarioService;
-
-    //Listar usuarios
+    //Listar ventas 
     @GetMapping
-    public ResponseEntity<List<UsuarioDTO>> listarTodos(){
-        List<UsuarioDTO> usuarioDTOs = usuarioService.listarTodos();
+    public ResponseEntity<List<VentaDTO>> listarTodos(){
+        List<VentaDTO> ventaDTOs = ventaService.listarTodos();
         return ResponseEntity
-        .ok(usuarioDTOs);
+        .ok(ventaDTOs);
     }
 
-    //Crear usuarios
+    //Guardar Venta
     @PostMapping
-    public ResponseEntity<UsuarioDTO> guardarUsuario(@Valid @RequestBody UsuarioDTO usuarioDTO){
-        UsuarioDTO creado = usuarioService.guardarUsuario(usuarioDTO);
+    public ResponseEntity<VentaDTO> guardarVenta(@Valid @RequestBody VentaDTO ventaDTO){
+        VentaDTO creado = ventaService.guardarVenta(ventaDTO);
         return ResponseEntity
         .status(HttpStatus.CREATED)
         .body(creado);
     }
 
-    //Eliminar usuarios
+    //Eliminar venta 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarUsuario(@PathVariable int id){
-        usuarioService.eliminarPorId(id);
+    public ResponseEntity<String> eliminarVenta(@PathVariable Long id){
+        ventaService.eliminarPorId(id);
         return ResponseEntity
         .noContent()
         .build();
     }
 
-    //Actualizar usuarios
+    //Actualizar venta 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioDTO> actualizarUsuario(@PathVariable int id,@Valid @RequestBody UsuarioDTO dto){
-        UsuarioDTO actualizado = usuarioService.actualizarUsuario(id, dto);
+    public ResponseEntity<VentaDTO> actualizarVenta(@PathVariable Long id, @Valid @RequestBody VentaDTO dto){
+        VentaDTO actualizado = ventaService.actualizarVenta(id, dto);
         return ResponseEntity
         .ok(actualizado);
     }
 
-    //Buscar usuarios por id
+    //buscar por id 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioDTO> findById(@PathVariable int id){
+    public ResponseEntity<VentaDTO> findById(@PathVariable Long id){
         return ResponseEntity
-        .ok(usuarioService.findById(id));
+        .ok(ventaService.findById(id));
     }
+    
 }

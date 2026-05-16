@@ -1,4 +1,4 @@
-package cl.duoc.sistemaMarket;
+package cl.duoc.msVenta;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
